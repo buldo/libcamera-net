@@ -6,12 +6,13 @@ project(
     libcamera-shim
     VERSION 0.1.0
     DESCRIPTION "Shim for libcamera"
-    HOMEPAGE_URL "https://example.com/"
+    HOMEPAGE_URL "https://github.com/buldo/libcamera-net"
     LANGUAGES CXX
 )
 
 include(cmake/project-is-top-level.cmake)
 include(cmake/variables.cmake)
+option(BUILD_SHARED_LIBS "Build shared libs." ON)
 
 # ---- Declare library ----
 
@@ -30,17 +31,23 @@ add_library(
 )
 add_library(libcamera-shim::libcamera-shim ALIAS libcamera-shim_libcamera-shim)
 
-include(GenerateExportHeader)
-generate_export_header(
-    libcamera-shim_libcamera-shim
-    BASE_NAME libcamera-shim
-    EXPORT_FILE_NAME export/libcamera-shim/libcamera-shim_export.hpp
-    CUSTOM_CONTENT_FROM_VARIABLE pragma_suppress_c4251
-)
+#----------------------------------------------------------------------------------------------------------------------
+# dependencies
+#----------------------------------------------------------------------------------------------------------------------
+find_package(PkgConfig REQUIRED)
 
-if(NOT BUILD_SHARED_LIBS)
-  target_compile_definitions(libcamera-shim_libcamera-shim PUBLIC LIBCAMERA_SHIM_STATIC_DEFINE)
-endif()
+pkg_check_modules(LIBCAMERA REQUIRED libcamera)
+message(STATUS "libcamera library found:")
+message(STATUS "    version: ${LIBCAMERA_VERSION}")
+message(STATUS "    libraries: ${LIBCAMERA_LINK_LIBRARIES}")
+message(STATUS "    include path: ${LIBCAMERA_INCLUDE_DIRS}")
+include_directories(${CMAKE_SOURCE_DIR} ${LIBCAMERA_INCLUDE_DIRS})
+
+#----------------------------------------------------------------------------------------------------------------------
+# end dependencies
+#----------------------------------------------------------------------------------------------------------------------
+
+target_compile_definitions(libcamera-shim_libcamera-shim PUBLIC LIBCAMERA_SHIM_STATIC_DEFINE)
 
 set_target_properties(
     libcamera-shim_libcamera-shim PROPERTIES
@@ -65,21 +72,6 @@ target_include_directories(
 )
 
 target_compile_features(libcamera-shim_libcamera-shim PUBLIC cxx_std_17)
-
-# ---- Install rules ----
-
-if(NOT CMAKE_SKIP_INSTALL_RULES)
-  include(cmake/install-rules.cmake)
-endif()
-
-# ---- Examples ----
-
-if(PROJECT_IS_TOP_LEVEL)
-  option(BUILD_EXAMPLES "Build examples tree." "${libcamera-shim_DEVELOPER_MODE}")
-  if(BUILD_EXAMPLES)
-    add_subdirectory(example)
-  endif()
-endif()
 
 # ---- Developer mode ----
 
