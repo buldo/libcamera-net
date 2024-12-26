@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+    <Import Project="ProjectReference.targets" Sdk="Microsoft.DotNet.CMake.Sdk" />
+ <ItemGroup>
+    <NativeProjectReference Include="..\libcamera-shim\CMakeLists.txt" CMakeProject="..\libcamera-shim\LibcameraShim.proj" BuildNative="true" />
+  </ItemGroup>
 </Project>
