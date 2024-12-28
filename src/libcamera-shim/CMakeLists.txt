@@ -41,7 +41,7 @@ message(STATUS "    libraries: ${LIBCAMERA_LINK_LIBRARIES}")
 message(STATUS "    include path: ${LIBCAMERA_INCLUDE_DIRS}")
 include_directories(${CMAKE_SOURCE_DIR} ${LIBCAMERA_INCLUDE_DIRS})
 
-target_link_libraries(libcamera-shim_libcamera-shim libcamera)
+target_link_libraries(libcamera-shim_libcamera-shim ${LIBCAMERA_LINK_LIBRARIES})
 #----------------------------------------------------------------------------------------------------------------------
 # end dependencies
 #----------------------------------------------------------------------------------------------------------------------

@@ -5,11 +5,9 @@ VisualStudioVersion = 17.13.35507.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bld.LibcameraNet", "Bld.LibcameraNet\Bld.LibcameraNet.csproj", "{2FBA9443-E8EB-43B7-B20A-6304DF21EB6F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{87AB0625-B593-4103-95F8-D3303E88B584}"
 	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-		libcamera-shim\LibcameraShim.proj = libcamera-shim\LibcameraShim.proj
-		NuGet.config = NuGet.config
+		libcamera-shim\CMakeLists.txt = libcamera-shim\CMakeLists.txt
 	EndProjectSection
 EndProject
 Global
