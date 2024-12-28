@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 3.14)
 
-include(cmake/prelude.cmake)
-
 project(
     libcamera-shim
-    VERSION 0.1.0
+    VERSION 0.3.2
     DESCRIPTION "Shim for libcamera"
     HOMEPAGE_URL "https://github.com/buldo/libcamera-net"
     LANGUAGES CXX
@@ -43,6 +41,7 @@ message(STATUS "    libraries: ${LIBCAMERA_LINK_LIBRARIES}")
 message(STATUS "    include path: ${LIBCAMERA_INCLUDE_DIRS}")
 include_directories(${CMAKE_SOURCE_DIR} ${LIBCAMERA_INCLUDE_DIRS})
 
+target_link_libraries(libcamera-shim_libcamera-shim libcamera)
 #----------------------------------------------------------------------------------------------------------------------
 # end dependencies
 #----------------------------------------------------------------------------------------------------------------------
@@ -72,16 +71,3 @@ target_include_directories(
 )
 
 target_compile_features(libcamera-shim_libcamera-shim PUBLIC cxx_std_17)
-
-# ---- Developer mode ----
-
-if(NOT libcamera-shim_DEVELOPER_MODE)
-  return()
-elseif(NOT PROJECT_IS_TOP_LEVEL)
-  message(
-      AUTHOR_WARNING
-      "Developer mode is intended for developers of libcamera-shim"
-  )
-endif()
-
-include(cmake/dev-mode.cmake)
