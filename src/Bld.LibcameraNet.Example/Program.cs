@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             Console.WriteLine("Creating camera manager");
-            var cameraManager = new CameraManager();
+            using var cameraManager = new CameraManager();
             Console.WriteLine("Camera manager created");
         }
     }

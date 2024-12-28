@@ -8,4 +8,9 @@ public static partial class LibcameraNative
         LibcameraConsts.LibName,
         EntryPoint = "libcamera_camera_manager_create")]
     internal static partial IntPtr CameraManagerCreate();
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_camera_manager_destroy")]
+    internal static partial void CameraManagerDestroy(IntPtr mgr);
 }
