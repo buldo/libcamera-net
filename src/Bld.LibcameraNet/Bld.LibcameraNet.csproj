@@ -1,9 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-      <RuntimeIdentifier>linux-arm64</RuntimeIdentifier>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/*/native/*" Pack="true" PackagePath="runtimes" />
+  </ItemGroup>
 </Project>
