@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/*/native/*" Pack="true" PackagePath="runtimes" />
   </ItemGroup>

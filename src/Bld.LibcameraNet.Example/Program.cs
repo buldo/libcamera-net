@@ -1,6 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using Bld.LibcameraNet;
-
-Console.WriteLine("Hello, World!");
-var cameraManager = new CameraManager();
+﻿namespace Bld.LibcameraNet.Example
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Creating camera manager");
+            var cameraManager = new CameraManager();
+            Console.WriteLine("Camera manager created");
+        }
+    }
+}
