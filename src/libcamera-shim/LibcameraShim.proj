@@ -1,12 +1,17 @@
 <Project Sdk="Microsoft.DotNet.CMake.Sdk">
   <PropertyGroup>
-      <Platform>arm64</Platform>
-      <!--<CMakeCompilerSearchScript>call &quot;$(RepoRoot)eng\init-vs-env.cmd&quot; $(TargetArchitecture)</CMakeCompilerSearchScript>-->
+<!--    <BuildArchitecture>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture.ToString().ToLowerInvariant())</BuildArchitecture>-->
+<!--    <Architecture Condition="'$(Architecture)' == '' AND '$(BuildArchitecture)' == 'arm64'">$(BuildArchitecture)</Architecture>-->
+    <CMakeGenerator>Ninja</CMakeGenerator>
+    <CMakeCompilerToolchain>gcc</CMakeCompilerToolchain>
+          <!--<CMakeCompilerSearchScript>call &quot;$(RepoRoot)eng\init-vs-env.cmd&quot; $(TargetArchitecture)</CMakeCompilerSearchScript>-->
+    <Platform>arm64</Platform>
     <CMakeLists>CMakeLists.txt</CMakeLists>
   </PropertyGroup>
 
   <ItemGroup>
-    <CMakeArguments Include=" --log-level=WARNING" />
+<!--    <CMakeDefines Include="Platform" Value="$(Platform)" />-->
+<!--    <CMakeArguments Include=" &#45;&#45;log-level=WARNING" />-->
     <!--<CMakeNativeToolArguments Include=" -verbosity:quiet /p:PlatformToolset=%__PlatformToolset% " />-->
   </ItemGroup>
 </Project>
