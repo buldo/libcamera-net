@@ -4,9 +4,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.3.2.1</Version>
+    <Authors>Roman Buldygin</Authors>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/*/native/*" Pack="true" PackagePath="runtimes" />
+    <Content Include="runtimes/linux-arm64/native/libcamera-shim.so.0.3.2">
+      <Pack>true</Pack>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <PackagePath>runtimes/linux-arm64/native/</PackagePath>
+    </Content>
   </ItemGroup>
 </Project>
