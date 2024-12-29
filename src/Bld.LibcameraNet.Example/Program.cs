@@ -12,6 +12,12 @@ namespace Bld.LibcameraNet.Example
             Console.WriteLine("Creating camera manager");
             using var cameraManager = new CameraManager();
             Console.WriteLine("Camera manager created");
+            
+            cameraManager.Start();
+            Console.WriteLine("Camera manager started");
+
+            using var cameraList = cameraManager.GetCameras();
+            Console.WriteLine($"Found {cameraList.Count} cameras");
         }
         
         private static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)

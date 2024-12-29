@@ -2,34 +2,32 @@ using Bld.LibcameraNet.Interop;
 
 namespace Bld.LibcameraNet;
 
-public class CameraManager : IDisposable
+public class CameraList : IDisposable
 {
+    private readonly IntPtr _listPtr;
+    private readonly Camera?[] _cameras;
     private bool _disposedValue;
-    private readonly IntPtr _nativeCameraManager;
 
-    public CameraManager()
+    internal CameraList(IntPtr listPtr)
     {
-        _nativeCameraManager = LibcameraNative.CameraManagerCreate();
-    }
-
-    public nint Start()
-    {
-        return LibcameraNative.CameraManagerStart(_nativeCameraManager);
+        _listPtr = listPtr;
+        Count = (int)LibcameraNative.CameraListSize(_listPtr);
+        _cameras = new Camera[Count];
     }
     
-    public void Stop()
-    {
-        LibcameraNative.CameraManagerStop(_nativeCameraManager);
-    }
+    public int Count { get; }
 
-    public CameraList GetCameras()
+    public int this[int index]
     {
-        var cameraListPtr = LibcameraNative.CameraManagerCameras(_nativeCameraManager);
-        return new CameraList(cameraListPtr);
+        if(_cameras[index] == null)
+    {
+        
+    }
+        // get and set accessors
     }
     
     #region Dispose
-    ~CameraManager() => Dispose(false);
+    ~CameraList() => Dispose(false);
 
     // Public implementation of Dispose pattern callable by consumers.
     public void Dispose()
@@ -49,7 +47,7 @@ public class CameraManager : IDisposable
             }
 
             // free unmanaged resources (unmanaged objects) and override finalizer
-            LibcameraNative.CameraManagerDestroy(_nativeCameraManager);
+            LibcameraNative.CameraListDestroy(_listPtr);
 
             // set large fields to null
             _disposedValue = true;
