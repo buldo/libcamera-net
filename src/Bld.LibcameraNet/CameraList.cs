@@ -14,18 +14,24 @@ public class CameraList : IDisposable
         Count = (int)LibcameraNative.CameraListSize(_listPtr);
         _cameras = new Camera[Count];
     }
-    
+
     public int Count { get; }
 
-    public int this[int index]
+
+    public Camera this[int index]
     {
-        if(_cameras[index] == null)
-    {
-        
+        get
+        {
+            if (_cameras[index] == null)
+            {
+                var camera = LibcameraNative.CameraListGet(_listPtr, index);
+                _cameras[index] = new Camera(camera);
+            }
+
+            return _cameras[index]!;
+        }
     }
-        // get and set accessors
-    }
-    
+
     #region Dispose
     ~CameraList() => Dispose(false);
 
