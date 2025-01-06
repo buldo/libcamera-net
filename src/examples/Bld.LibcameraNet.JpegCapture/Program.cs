@@ -20,6 +20,7 @@ internal class Program
         var filename = args.Length == 1? args[0] : DateTime.Now.Ticks + ".jpg";
 
         using var mgr = new CameraManager();
+        mgr.Start();
         using var cameras = mgr.GetCameras();
 
         if (cameras.Count == 0)
