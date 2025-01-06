@@ -58,6 +58,13 @@ libcamera_size_range_t libcamera_stream_formats_range(const libcamera_stream_for
 const libcamera_stream_formats_t *libcamera_stream_configuration_formats(const libcamera_stream_configuration_t *config);
 libcamera_stream_t *libcamera_stream_configuration_stream(const libcamera_stream_configuration_t *config);
 
+libcamera_pixel_format_t libcamera_stream_configuration_get_pixel_format(
+    const libcamera_stream_configuration_t* config);
+
+void libcamera_stream_configuration_set_pixel_format(
+    libcamera_stream_configuration_t* config,
+    libcamera_pixel_format_t format);
+
 #ifdef __cplusplus
 }
 #endif

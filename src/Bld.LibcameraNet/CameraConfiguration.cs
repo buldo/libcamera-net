@@ -18,6 +18,11 @@ public class CameraConfiguration : IDisposable
         return new StreamConfiguration(confPtr);
     }
 
+    public CameraConfigurationStatus Validate()
+    {
+        return LibcameraNative.CameraConfigurationValidate(_cfgPtr);
+    }
+
     #region Dispose
     ~CameraConfiguration() => Dispose(false);
 

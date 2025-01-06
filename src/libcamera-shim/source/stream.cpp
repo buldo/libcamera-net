@@ -1,6 +1,7 @@
 #include "stream.h"
 
 #include <libcamera/libcamera.h>
+#include <libcamera/formats.h>
 
 extern "C" {
 
@@ -22,6 +23,20 @@ const libcamera_stream_formats_t *libcamera_stream_configuration_formats(const l
 
 libcamera_stream_t *libcamera_stream_configuration_stream(const libcamera_stream_configuration_t *config) {
     return config->stream();
+}
+
+libcamera_pixel_format_t libcamera_stream_configuration_get_pixel_format(
+    const libcamera_stream_configuration_t* config)
+{
+  return config->pixelFormat;
+}
+
+void libcamera_stream_configuration_set_pixel_format(
+    libcamera_stream_configuration_t* config,
+    libcamera_pixel_format_t format)
+{
+  config->pixelFormat =
+      libcamera::PixelFormat(format.fourcc(), format.modifier());
 }
 
 }

@@ -9,6 +9,9 @@ namespace Bld.LibcameraNet.JpegCapture;
 
 internal class Program
 {
+    // TODO: RIGHT format
+    private static PixelFormat PIXEL_FORMAT_MJPEG = new PixelFormat();
+
     static void Main(string[] args)
     {
         // Only when LibcameraNet referenced as project
@@ -26,7 +29,7 @@ internal class Program
         var cam = cameras[0];
         var cameraModel = cam.Properties.Get<CameraModel>();
         Console.WriteLine($"Using camera: {cameraModel}");
-        
+
         var acqResult = cam.Acquire();
         if (acqResult < 0)
         {
@@ -38,7 +41,7 @@ internal class Program
 
         // Use MJPEG format so we can write resulting frame directly into jpeg file
         var streamConfiguration = cfgs.Get(0);
-        streamConfiguration.SetPixelFormat(PIXEL_FORMAT_MJPEG);
+        streamConfiguration.PixelFormat = PIXEL_FORMAT_MJPEG;
 
         Console.WriteLine($"Generated config: {cfgs}");
 
@@ -54,7 +57,7 @@ internal class Program
             case CameraConfigurationStatus.Invalid:
                 throw new Exception("Error validating camera configuration");
         }
-        
+
         // Ensure that pixel format was unchanged
         //    assert_eq!(
         //        cfgs.get(0).unwrap().get_pixel_format(),

@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 
 namespace Bld.LibcameraNet.Interop;
@@ -111,5 +112,30 @@ public static partial class LibcameraNative
         LibcameraConsts.LibName,
         EntryPoint = "libcamera_camera_configuration_at")]
     internal static partial IntPtr CameraConfigurationAt(IntPtr config, nint index);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_camera_configuration_validate")]
+    internal static partial CameraConfigurationStatus CameraConfigurationValidate(IntPtr config);
     #endregion
+
+    #region StreamConfiguration
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_stream_configuration_get_pixel_format")]
+    internal static partial PixelFormat StreamConfigurationGetPixelFormat(IntPtr config);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_stream_configuration_get_pixel_format")]
+    internal static partial void StreamConfigurationSetPixelFormat(IntPtr config, PixelFormat format);
+
+    #endregion
+}
+
+public struct PixelFormat
+{
+    UInt32 Fourcc;
+    UInt64 Modifier;
 }
