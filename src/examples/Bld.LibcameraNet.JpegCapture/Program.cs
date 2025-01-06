@@ -10,7 +10,7 @@ namespace Bld.LibcameraNet.JpegCapture;
 internal class Program
 {
     // TODO: RIGHT format
-    private static PixelFormat PIXEL_FORMAT_MJPEG = new PixelFormat();
+    private static PixelFormat PIXEL_FORMAT_MJPEG = new PixelFormat(){};
 
     static void Main(string[] args)
     {
@@ -29,12 +29,12 @@ internal class Program
         }
         var cam = cameras[0];
         var cameraModel = cam.Properties.Get<CameraModel>();
-        Console.WriteLine($"Using camera: {cameraModel}");
+        Console.WriteLine($"Using camera: {cameraModel.Value}");
 
         var acqResult = cam.Acquire();
         if (acqResult < 0)
         {
-            throw new Exception("No cameras found");
+            throw new Exception("Not able to acquire camera");
         }
 
         // This will generate default configuration for each specified role
@@ -42,7 +42,7 @@ internal class Program
 
         // Use MJPEG format so we can write resulting frame directly into jpeg file
         var streamConfiguration = cfgs.Get(0);
-        streamConfiguration.PixelFormat = PIXEL_FORMAT_MJPEG;
+        streamConfiguration.PixelFormat = PixelFormats.MJpeg;
 
         Console.WriteLine($"Generated config: {cfgs}");
 
@@ -59,13 +59,11 @@ internal class Program
                 throw new Exception("Error validating camera configuration");
         }
 
-        // Ensure that pixel format was unchanged
-        //    assert_eq!(
-        //        cfgs.get(0).unwrap().get_pixel_format(),
-        //        PIXEL_FORMAT_MJPEG,
-        //        "MJPEG is not supported by the camera"
-        //    );
-
+        if (streamConfiguration.PixelFormat != PixelFormats.MJpeg)
+        {
+            throw new Exception("MJPEG is not supported by the camera");
+        }
+        
         //    cam.configure(&mut cfgs).expect("Unable to configure camera");
 
         //    let mut alloc = FrameBufferAllocator::new(&cam);

@@ -133,9 +133,3 @@ public static partial class LibcameraNative
 
     #endregion
 }
-
-public struct PixelFormat
-{
-    UInt32 Fourcc;
-    UInt64 Modifier;
-}
