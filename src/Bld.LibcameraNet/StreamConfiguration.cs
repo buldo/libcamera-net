@@ -9,6 +9,8 @@ public class StreamConfiguration
     internal StreamConfiguration(IntPtr confPtr)
     {
         _confPtr = confPtr;
+        var formatsPtr = LibcameraNative.StreamConfigurationFormats(_confPtr);
+        StreamFormats = new StreamFormats(formatsPtr);
     }
 
     public PixelFormat PixelFormat
@@ -16,4 +18,6 @@ public class StreamConfiguration
         get => LibcameraNative.StreamConfigurationGetPixelFormat(_confPtr);
         set => LibcameraNative.StreamConfigurationSetPixelFormat(_confPtr, value);
     }
+
+    public StreamFormats StreamFormats { get; }
 }

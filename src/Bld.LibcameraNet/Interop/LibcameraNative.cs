@@ -102,7 +102,6 @@ public static partial class LibcameraNative
     #endregion
 
     #region CameraConfiguration
-
     [LibraryImport(
         LibcameraConsts.LibName,
         EntryPoint = "libcamera_camera_configuration_destroy")]
@@ -120,7 +119,6 @@ public static partial class LibcameraNative
     #endregion
 
     #region StreamConfiguration
-
     [LibraryImport(
         LibcameraConsts.LibName,
         EntryPoint = "libcamera_stream_configuration_get_pixel_format")]
@@ -131,5 +129,29 @@ public static partial class LibcameraNative
         EntryPoint = "libcamera_stream_configuration_get_pixel_format")]
     internal static partial void StreamConfigurationSetPixelFormat(IntPtr config, PixelFormat format);
 
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_stream_configuration_formats")]
+    internal static partial IntPtr StreamConfigurationFormats(IntPtr config);
+    #endregion
+
+    #region StreamFormats
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_stream_formats_pixel_formats")]
+    internal static partial IntPtr StreamFormatsPixelFormats(IntPtr formats);
+    #endregion
+
+    #region PixelFormats
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_pixel_formats_size")]
+    internal static partial int PixelFormatsSize(IntPtr formats);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_pixel_formats_get")]
+    internal static partial PixelFormat PixelFormatsGet(IntPtr formats, nint index);
     #endregion
 }

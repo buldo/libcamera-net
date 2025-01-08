@@ -16,7 +16,7 @@ public class CameraManager : IDisposable
     {
         return LibcameraNative.CameraManagerStart(_nativeCameraManager);
     }
-    
+
     public void Stop()
     {
         LibcameraNative.CameraManagerStop(_nativeCameraManager);
@@ -27,7 +27,7 @@ public class CameraManager : IDisposable
         var cameraListPtr = LibcameraNative.CameraManagerCameras(_nativeCameraManager);
         return new CameraList(cameraListPtr);
     }
-    
+
     #region Dispose
     ~CameraManager() => Dispose(false);
 

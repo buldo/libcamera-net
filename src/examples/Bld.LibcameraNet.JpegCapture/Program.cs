@@ -42,7 +42,15 @@ internal class Program
 
         // Use MJPEG format so we can write resulting frame directly into jpeg file
         var streamConfiguration = cfgs.Get(0);
-        streamConfiguration.PixelFormat = PixelFormats.MJpeg;
+        var pixelFormats = streamConfiguration.StreamFormats.PixelFormats;
+        Console.WriteLine("PixelFormats:");
+        for (int i = 0; i < pixelFormats.Count; i++)
+        {
+            var format = pixelFormats[i];
+            Console.WriteLine($"    {format.ToFourccString()}");
+        }
+
+        streamConfiguration.PixelFormat = KnownPixelFormats.MJpeg;
 
         Console.WriteLine($"Generated config: {cfgs}");
 
@@ -59,11 +67,11 @@ internal class Program
                 throw new Exception("Error validating camera configuration");
         }
 
-        if (streamConfiguration.PixelFormat != PixelFormats.MJpeg)
+        if (streamConfiguration.PixelFormat != KnownPixelFormats.MJpeg)
         {
             throw new Exception("MJPEG is not supported by the camera");
         }
-        
+
         //    cam.configure(&mut cfgs).expect("Unable to configure camera");
 
         //    let mut alloc = FrameBufferAllocator::new(&cam);
