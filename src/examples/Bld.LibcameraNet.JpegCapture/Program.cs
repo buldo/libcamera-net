@@ -71,7 +71,11 @@ internal class Program
             throw new Exception("MJPEG is not supported by the camera");
         }
 
-        //    cam.configure(&mut cfgs).expect("Unable to configure camera");
+        var camConfigurationResult = cam.Configure(cfgs);
+        if (camConfigurationResult < 0)
+        {
+            throw new Exception("Unable to configure camera");
+        }
 
         //    let mut alloc = FrameBufferAllocator::new(&cam);
 

@@ -99,6 +99,11 @@ public static partial class LibcameraNative
         LibcameraConsts.LibName,
         EntryPoint = "libcamera_camera_generate_configuration")]
     internal static partial IntPtr CameraGenerateConfiguration(IntPtr cam, [In] StreamRole[] roles, nint roleCount);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_camera_configure")]
+    internal static partial int CameraConfigure(IntPtr cam, IntPtr config);
     #endregion
 
     #region CameraConfiguration

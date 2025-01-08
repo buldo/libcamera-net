@@ -23,6 +23,11 @@ public class CameraConfiguration : IDisposable
         return LibcameraNative.CameraConfigurationValidate(_cfgPtr);
     }
 
+    public IntPtr GetPtr()
+    {
+        return _cfgPtr;
+    }
+
     #region Dispose
     ~CameraConfiguration() => Dispose(false);
 

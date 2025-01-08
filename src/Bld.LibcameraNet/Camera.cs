@@ -29,4 +29,9 @@ public class Camera
         var cfg = LibcameraNative.CameraGenerateConfiguration(_cameraPtr, streamRoles, streamRoles.Length);
         return new CameraConfiguration(cfg);
     }
+
+    public int Configure(CameraConfiguration configuration)
+    {
+        return LibcameraNative.CameraConfigure(_cameraPtr, configuration.GetPtr());
+    }
 }
