@@ -23,7 +23,7 @@ public class CameraConfiguration : IDisposable
         return LibcameraNative.CameraConfigurationValidate(_cfgPtr);
     }
 
-    public IntPtr GetPtr()
+    internal IntPtr GetPtr()
     {
         return _cfgPtr;
     }

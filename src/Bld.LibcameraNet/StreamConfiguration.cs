@@ -20,4 +20,10 @@ public class StreamConfiguration
     }
 
     public StreamFormats StreamFormats { get; }
+
+    public LibcameraStream GetStream()
+    {
+        var streamPtr = LibcameraNative.StreamConfigurationStream(_confPtr);
+        return new LibcameraStream(streamPtr);
+    }
 }

@@ -138,6 +138,16 @@ public static partial class LibcameraNative
         LibcameraConsts.LibName,
         EntryPoint = "libcamera_stream_configuration_formats")]
     internal static partial IntPtr StreamConfigurationFormats(IntPtr config);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_stream_configuration_stream")]
+    internal static partial IntPtr StreamConfigurationStream(IntPtr config);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_framebuffer_allocator_allocate")]
+    internal static partial int FramebufferAllocatorAllocate(IntPtr alloc, IntPtr stream);
     #endregion
 
     #region StreamFormats
@@ -148,7 +158,6 @@ public static partial class LibcameraNative
     #endregion
 
     #region PixelFormats
-
     [LibraryImport(
         LibcameraConsts.LibName,
         EntryPoint = "libcamera_pixel_formats_size")]
@@ -158,5 +167,27 @@ public static partial class LibcameraNative
         LibcameraConsts.LibName,
         EntryPoint = "libcamera_pixel_formats_get")]
     internal static partial PixelFormat PixelFormatsGet(IntPtr formats, nint index);
+    #endregion
+
+    #region FrameBufferAllocator
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_framebuffer_allocator_create")]
+    internal static partial IntPtr FramebufferAllocatorCreate(IntPtr cam);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_framebuffer_allocator_buffers")]
+    internal static partial IntPtr FramebufferAllocatorBuffers(IntPtr alloc, IntPtr stream);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_framebuffer_list_size")]
+    internal static partial nuint FramebufferListSize(IntPtr list);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_framebuffer_list_get")]
+    internal static partial IntPtr FramebufferListGet(IntPtr list, nuint index);
     #endregion
 }

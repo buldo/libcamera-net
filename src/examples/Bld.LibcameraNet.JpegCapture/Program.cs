@@ -77,15 +77,14 @@ internal class Program
             throw new Exception("Unable to configure camera");
         }
 
-        //    let mut alloc = FrameBufferAllocator::new(&cam);
+        var alloc = new FrameBufferAllocator(cam);
 
-        //    // Allocate frame buffers for the stream
-        //    let cfg = cfgs.get(0).unwrap();
-        //    let stream = cfg.stream().unwrap();
-        //    let buffers = alloc.alloc(&stream).unwrap();
-        //    println!("Allocated {} buffers", buffers.len());
+        // Allocate frame buffers for the stream
+        var stream = streamConfiguration.GetStream();
+        var buffers = alloc.Alloc(stream);
+        Console.WriteLine($"Allocated {buffers.Count} buffers");
 
-        //    // Convert FrameBuffer to MemoryMappedFrameBuffer, which allows reading &[u8]
+        // Convert FrameBuffer to MemoryMappedFrameBuffer, which allows reading &[u8]
         //    let buffers = buffers
         //        .into_iter()
         //        .map(| buf | MemoryMappedFrameBuffer::new(buf).unwrap())

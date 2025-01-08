@@ -34,4 +34,9 @@ public class Camera
     {
         return LibcameraNative.CameraConfigure(_cameraPtr, configuration.GetPtr());
     }
+
+    internal IntPtr GetPtr()
+    {
+        return _cameraPtr;
+    }
 }
