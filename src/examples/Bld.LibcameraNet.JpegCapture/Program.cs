@@ -38,7 +38,7 @@ internal class Program
         }
 
         // This will generate default configuration for each specified role
-        using var cfgs = cam.GenerateConfiguration([StreamRole.Viewfinder]);
+        using var cfgs = cam.GenerateConfiguration([StreamRole.StillCapture]);
 
         // Use MJPEG format so we can write resulting frame directly into jpeg file
         var streamConfiguration = cfgs.Get(0);
@@ -50,10 +50,9 @@ internal class Program
             Console.WriteLine($"    {format.ToFourccString()}");
         }
 
-        streamConfiguration.PixelFormat = KnownPixelFormats.MJpeg;
-
         Console.WriteLine($"Generated config: {cfgs}");
 
+        streamConfiguration.PixelFormat = KnownPixelFormats.Yuv420;
         var validationResult = cfgs.Validate();
         switch (validationResult)
         {
@@ -67,7 +66,7 @@ internal class Program
                 throw new Exception("Error validating camera configuration");
         }
 
-        if (streamConfiguration.PixelFormat != KnownPixelFormats.MJpeg)
+        if (streamConfiguration.PixelFormat != KnownPixelFormats.Yuv420)
         {
             throw new Exception("MJPEG is not supported by the camera");
         }

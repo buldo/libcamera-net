@@ -6,6 +6,7 @@ namespace Bld.LibcameraNet;
 public static class KnownPixelFormats
 {
     public static PixelFormat MJpeg { get; } = Create('M', 'J', 'P', 'G', 0, 0);
+    public static PixelFormat Yuv420 { get; } = Create('Y', 'U', '1', '2', 0, 0);
 
     public static string ToFourccString(this PixelFormat format)
     {
