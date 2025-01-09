@@ -90,7 +90,7 @@ internal class Program
         //        .map(| buf | MemoryMappedFrameBuffer::new(buf).unwrap())
         //        .collect::< Vec < _ >> ();
 
-        //    // Create capture requests and attach buffers
+        // Create capture requests and attach buffers
         //    let mut reqs = buffers
         //        .into_iter()
         //        .map(| buf | {
@@ -100,7 +100,7 @@ internal class Program
         //        })
         //    .collect::< Vec < _ >> ();
 
-        //    // Completed capture requests are returned as a callback
+        // Completed capture requests are returned as a callback
         //    let(tx, rx) = std::sync::mpsc::channel();
         //    cam.on_request_completed(move | req | {
         //        tx.send(req).unwrap();
