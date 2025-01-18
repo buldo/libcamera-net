@@ -1,18 +1,13 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 
 using Bld.LibcameraNet.Interop;
-
 
 namespace Bld.LibcameraNet.JpegCapture;
 
 internal class Program
 {
-    // TODO: RIGHT format
-    private static PixelFormat PIXEL_FORMAT_MJPEG = new PixelFormat(){};
-
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         // Only when LibcameraNet referenced as project
         NativeLibrary.SetDllImportResolver(typeof(CameraManager).Assembly, DllImportResolver);
@@ -31,11 +26,7 @@ internal class Program
         var cameraModel = cam.Properties.Get<CameraModel>();
         Console.WriteLine($"Using camera: {cameraModel.Value}");
 
-        var acqResult = cam.Acquire();
-        if (acqResult < 0)
-        {
-            throw new Exception("Not able to acquire camera");
-        }
+        cam.Acquire();
 
         // This will generate default configuration for each specified role
         using var cfgs = cam.GenerateConfiguration([StreamRole.StillCapture]);
@@ -85,37 +76,36 @@ internal class Program
         Console.WriteLine($"Allocated {buffers.Count} buffers");
 
         // Convert FrameBuffer to MemoryMappedFrameBuffer, which allows reading &[u8]
-        //    let buffers = buffers
-        //        .into_iter()
-        //        .map(| buf | MemoryMappedFrameBuffer::new(buf).unwrap())
-        //        .collect::< Vec < _ >> ();
+        var mmBuffers = buffers
+            .Select(b => new MemoryMappedFrameBuffer(b))
+            .ToList();
 
         // Create capture requests and attach buffers
-        //    let mut reqs = buffers
-        //        .into_iter()
-        //        .map(| buf | {
-        //        let mut req = cam.create_request(None).unwrap();
-        //        req.add_buffer(&stream, buf).unwrap();
-        //        req
-        //        })
-        //    .collect::< Vec < _ >> ();
+        var reqs = new List<Request>();
+        foreach (var buf in mmBuffers)
+        {
+            var request = cam.CreateRequest();
+            request.AddBuffer(stream, buf);
+            reqs.Add(request);
+        }
 
         // Completed capture requests are returned as a callback
-        //    let(tx, rx) = std::sync::mpsc::channel();
-        //    cam.on_request_completed(move | req | {
-        //        tx.send(req).unwrap();
-        //    });
+        var channel = System.Threading.Channels.Channel.CreateUnbounded<Request>();
+        var tx = channel.Writer;
+        var rx = channel.Reader;
+        cam.OnRequestCompleted(req => tx.TryWrite(req));
 
-        //    cam.start(None).unwrap();
+        cam.Start();
 
-        //    // Multiple requests can be queued at a time, but for this example we just want a single frame.
-        //    cam.queue_request(reqs.pop().unwrap()).unwrap();
+        // Multiple requests can be queued at a time, but for this example we just want a single frame.
+        cam.QueueRequest(reqs.First());
 
-        //    println!("Waiting for camera request execution");
-        //    let req = rx.recv_timeout(Duration::from_secs(2)).expect("Camera request failed");
+        Console.WriteLine("Waiting for camera request execution");
+        await rx.WaitToReadAsync();
+        var req = await rx.ReadAsync();
 
-        //    println!("Camera request {:?} completed!", req);
-        //    println!("Metadata: {:#?}", req.metadata());
+        Console.WriteLine($"Camera request {req} completed!");
+        //Console.WriteLine($"Metadata: {req.Metadata}");
 
         //    // Get framebuffer for our stream
         //    let framebuffer: &MemoryMappedFrameBuffer < FrameBuffer > = req.buffer(&stream).unwrap();

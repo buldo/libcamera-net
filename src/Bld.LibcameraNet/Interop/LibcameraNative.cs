@@ -104,6 +104,31 @@ public static partial class LibcameraNative
         LibcameraConsts.LibName,
         EntryPoint = "libcamera_camera_configure")]
     internal static partial int CameraConfigure(IntPtr cam, IntPtr config);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_camera_create_request")]
+    internal static partial IntPtr CameraCreateRequest(IntPtr cam, UInt64 cookie);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_camera_start")]
+    internal static partial int CameraStart(IntPtr cam, IntPtr controls);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_camera_queue_request")]
+    internal static partial int CameraQueueRequest(IntPtr cam, IntPtr request);
+
+    internal delegate void RequestCompletedCb(IntPtr data, IntPtr requestPtr);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_camera_request_completed_connect")]
+    internal static partial IntPtr CameraRequestCompletedConnect(
+        IntPtr cam,
+        RequestCompletedCb callback,
+        IntPtr data);
     #endregion
 
     #region CameraConfiguration
@@ -189,5 +214,14 @@ public static partial class LibcameraNative
         LibcameraConsts.LibName,
         EntryPoint = "libcamera_framebuffer_list_get")]
     internal static partial IntPtr FramebufferListGet(IntPtr list, nuint index);
+    #endregion
+
+    #region Request
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_request_add_buffer")]
+    internal static partial int RequestAddBuffer(IntPtr request, IntPtr stream, IntPtr buffer);
+
     #endregion
 }
