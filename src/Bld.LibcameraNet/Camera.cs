@@ -9,7 +9,7 @@ public class Camera
     private readonly Dictionary<IntPtr, Request> _requests = new();
     private Action<Request>? _onRequestCompleted;
     private IntPtr _requestCompletedHandle;
-    
+
     internal Camera(IntPtr cameraPtr)
     {
         _cameraPtr = cameraPtr;
@@ -29,11 +29,15 @@ public class Camera
         _requestCompletedHandle =
             LibcameraNative.CameraRequestCompletedConnect(
                 _cameraPtr,
-                delegate(IntPtr data, IntPtr requestptr) {
-                    try {
-                        var camera = (Camera)GCHandle.FromIntPtr(data).Target;
-                        camera.ProcessRequestCompleted(requestptr);
-                    } catch (Exception ex) {
+                delegate(IntPtr data, IntPtr requestPtr)
+                {
+                    try
+                    {
+                        var request = _requests[requestPtr];
+                        _onRequestCompleted?.Invoke(request);
+                    }
+                    catch (Exception ex)
+                    {
                     }
                 },
                 IntPtr.Zero);
@@ -92,11 +96,5 @@ public class Camera
         {
             //Err(io::Error::from_raw_os_error(ret))
         }
-    }
-
-    private void ProcessRequestCompleted(IntPtr requestPtr)
-    {
-        var request = _requests[requestPtr];
-        _onRequestCompleted?.Invoke(request);
     }
 }
