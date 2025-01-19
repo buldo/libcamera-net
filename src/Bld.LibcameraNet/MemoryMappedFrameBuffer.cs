@@ -7,13 +7,13 @@ namespace Bld.LibcameraNet;
 public class MemoryMappedFrameBuffer : IAsFrameBuffer
 {
     private readonly FrameBuffer _frameBuffer;
+    private readonly List<MappedPlane> _planes = new List<MappedPlane>();
     private readonly Dictionary<int, (IntPtr pointer, UInt64 len)> _mapped = new();
 
     public MemoryMappedFrameBuffer(FrameBuffer frameBuffer)
     {
         _frameBuffer = frameBuffer;
 
-        var planes = new List<MappedPlane>();
         var map_info =  new Dictionary<int, MapInfo>();
 
         //for (index, plane) in .into_iter().enumerate()
@@ -24,7 +24,7 @@ public class MemoryMappedFrameBuffer : IAsFrameBuffer
             var len = plane.Length;
 
             // TODO: What to do if offset is not valid?
-            planes.Add(new MappedPlane { fd = fd, offset = offset.Value, len = len });
+            _planes.Add(new MappedPlane { fd = fd, offset = offset.Value, len = len });
 
             // Find total FD length if not known yet
             var total_len = LibcNative.Lseek64(fd, 0, WhenceFlags.SEEK_END);
@@ -72,6 +72,40 @@ public class MemoryMappedFrameBuffer : IAsFrameBuffer
 
             _mapped[fd] = (addr, info.mapped_len);
         }
+    }
+
+    public byte[] GetData()
+    {
+        UInt64 fullLen = 0;
+        foreach (var plane in _planes)
+        {
+            fullLen += plane.len;
+        }
+
+        var data = new byte[fullLen];
+        var targetOffset = 0;
+        foreach (var plane in _planes)
+        {
+            var mmap_ptr = _mapped[plane.fd].pointer;
+
+            unsafe
+            {
+                fixed (byte* pTarget = data)
+                {
+                    byte* pSource = (byte*)mmap_ptr;
+
+                    // Copy the specified number of bytes from source to target.
+                    for (int i = 0; i < (int)plane.len; i++)
+                    {
+                        pTarget[targetOffset + i] = pSource[plane.offset + (ulong)i];
+                    }
+                }
+            }
+
+            targetOffset += (int)plane.len;
+        }
+
+        return data;
     }
 
     public FrameBuffer AsFrameBuffer()

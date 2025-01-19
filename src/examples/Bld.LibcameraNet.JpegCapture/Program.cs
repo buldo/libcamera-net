@@ -2,6 +2,9 @@
 using System.Runtime.InteropServices;
 
 using Bld.LibcameraNet.Interop;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Bld.LibcameraNet.JpegCapture;
 
@@ -43,7 +46,7 @@ internal class Program
 
         Console.WriteLine($"Generated config: {cfgs}");
 
-        streamConfiguration.PixelFormat = KnownPixelFormats.DRM_FORMAT_YUV420;
+        streamConfiguration.PixelFormat = KnownPixelFormats.DRM_FORMAT_RGB888;
         var validationResult = cfgs.Validate();
         switch (validationResult)
         {
@@ -57,9 +60,9 @@ internal class Program
                 throw new Exception("Error validating camera configuration");
         }
 
-        if (streamConfiguration.PixelFormat != KnownPixelFormats.DRM_FORMAT_YUV420)
+        if (streamConfiguration.PixelFormat != KnownPixelFormats.DRM_FORMAT_RGB888)
         {
-            throw new Exception("MJPEG is not supported by the camera");
+            throw new Exception("RGB888 is not supported by the camera");
         }
 
         var camConfigurationResult = cam.Configure(cfgs);
@@ -108,18 +111,13 @@ internal class Program
         Console.WriteLine($"Metadata: {req.Metadata}");
 
         // Get framebuffer for our stream
-        var framebuffer = req.GetBuffer(stream);
+        var framebuffer = (MemoryMappedFrameBuffer)req.GetBuffer(stream);
         //Console.WriteLine($"FrameBuffer metadata: {framebuffer.Metadata}");
 
-        //    // MJPEG format has only one data plane containing encoded jpeg data with all the headers
-        //    let planes = framebuffer.data();
-        //    let jpeg_data = planes.get(0).unwrap();
-        //    // Actual JPEG-encoded data will be smalled than framebuffer size, its length can be obtained from metadata.
-        //    let jpeg_len = framebuffer.metadata().unwrap().planes().get(0).unwrap().bytes_used as usize;
-
-        //    std::fs::write(&filename, &jpeg_data[..jpeg_len]).unwrap();
-        //    println!("Written {} bytes to {}", jpeg_len, &filename);
-
+        // MJPEG format has only one data plane containing encoded jpeg data with all the headers
+        var planes = framebuffer.GetData();
+        var image = Image.LoadPixelData<Rgb24>(planes, 3280, 2464);
+        image.Save("img.jpg", new JpegEncoder());
     }
 
     private static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
