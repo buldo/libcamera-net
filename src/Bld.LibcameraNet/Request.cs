@@ -5,7 +5,7 @@ namespace Bld.LibcameraNet;
 public class Request
 {
     private readonly IntPtr _reqPtr;
-    private readonly Dictionary<LibcameraStream, IAsFrameBuffer> _buffers;
+    private readonly Dictionary<LibcameraStream, IAsFrameBuffer> _buffers = new();
 
     internal Request(IntPtr reqPtr)
     {
