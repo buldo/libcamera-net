@@ -19,6 +19,11 @@ public class Request
 
     public UInt32 Sequence => LibcameraNative.RequestSequence(_reqPtr);
 
+    internal IntPtr GetPtr()
+    {
+        return _reqPtr;
+    }
+
     public ControlList Metadata
     {
         get
@@ -42,13 +47,13 @@ public class Request
         }
     }
 
-    internal IntPtr GetPtr()
-    {
-        return _reqPtr;
-    }
-
     public override string ToString()
     {
         return $"seq: {Sequence}; status: {Status}; cookie: {Cookie};";
+    }
+
+    public IAsFrameBuffer GetBuffer(LibcameraStream stream)
+    {
+        return _buffers[stream];
     }
 }

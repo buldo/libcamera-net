@@ -38,12 +38,12 @@ internal class Program
         for (int i = 0; i < pixelFormats.Count; i++)
         {
             var format = pixelFormats[i];
-            Console.WriteLine($"    {format.ToFourccString()}");
+            Console.WriteLine($"    {format.GetName()}");
         }
 
         Console.WriteLine($"Generated config: {cfgs}");
 
-        streamConfiguration.PixelFormat = KnownPixelFormats.Yuv420;
+        streamConfiguration.PixelFormat = KnownPixelFormats.DRM_FORMAT_YUV420;
         var validationResult = cfgs.Validate();
         switch (validationResult)
         {
@@ -57,7 +57,7 @@ internal class Program
                 throw new Exception("Error validating camera configuration");
         }
 
-        if (streamConfiguration.PixelFormat != KnownPixelFormats.Yuv420)
+        if (streamConfiguration.PixelFormat != KnownPixelFormats.DRM_FORMAT_YUV420)
         {
             throw new Exception("MJPEG is not supported by the camera");
         }
@@ -107,9 +107,9 @@ internal class Program
         Console.WriteLine($"Camera request {req} completed!");
         Console.WriteLine($"Metadata: {req.Metadata}");
 
-        //    // Get framebuffer for our stream
-        //    let framebuffer: &MemoryMappedFrameBuffer < FrameBuffer > = req.buffer(&stream).unwrap();
-        //    println!("FrameBuffer metadata: {:#?}", framebuffer.metadata());
+        // Get framebuffer for our stream
+        var framebuffer = req.GetBuffer(stream);
+        //Console.WriteLine($"FrameBuffer metadata: {framebuffer.Metadata}");
 
         //    // MJPEG format has only one data plane containing encoded jpeg data with all the headers
         //    let planes = framebuffer.data();
