@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 
 namespace Bld.LibcameraNet.Interop;
@@ -223,6 +224,25 @@ public static partial class LibcameraNative
         EntryPoint = "libcamera_request_add_buffer")]
     internal static partial int RequestAddBuffer(IntPtr request, IntPtr stream, IntPtr buffer);
 
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_request_cookie")]
+    internal static partial UInt64 RequestCookie(IntPtr request);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_request_status")]
+    internal static partial RequestStatus RequestStatus(IntPtr request);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_request_sequence")]
+    internal static partial UInt32 RequestSequence(IntPtr request);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_request_metadata")]
+    internal static partial IntPtr RequestMetadata(IntPtr request);
     #endregion
 
     #region Framebuffer

@@ -2,6 +2,7 @@
 
 namespace Bld.LibcameraNet;
 
+// TODO: Add dispose
 public class Request
 {
     private readonly IntPtr _reqPtr;
@@ -10,6 +11,21 @@ public class Request
     internal Request(IntPtr reqPtr)
     {
         _reqPtr = reqPtr;
+    }
+
+    public UInt64 Cookie => LibcameraNative.RequestCookie(_reqPtr);
+
+    public RequestStatus Status => LibcameraNative.RequestStatus(_reqPtr);
+
+    public UInt32 Sequence => LibcameraNative.RequestSequence(_reqPtr);
+
+    public ControlList Metadata
+    {
+        get
+        {
+            var ptr = LibcameraNative.RequestMetadata(_reqPtr);
+            return new ControlList(ptr);
+        }
     }
 
     public void AddBuffer<T>(LibcameraStream stream, T buffer) where T: IAsFrameBuffer
@@ -29,5 +45,10 @@ public class Request
     internal IntPtr GetPtr()
     {
         return _reqPtr;
+    }
+
+    public override string ToString()
+    {
+        return $"seq: {Sequence}; status: {Status}; cookie: {Cookie};";
     }
 }

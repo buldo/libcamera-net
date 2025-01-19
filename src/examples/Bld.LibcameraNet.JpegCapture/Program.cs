@@ -105,7 +105,7 @@ internal class Program
         var req = await rx.ReadAsync();
 
         Console.WriteLine($"Camera request {req} completed!");
-        //Console.WriteLine($"Metadata: {req.Metadata}");
+        Console.WriteLine($"Metadata: {req.Metadata}");
 
         //    // Get framebuffer for our stream
         //    let framebuffer: &MemoryMappedFrameBuffer < FrameBuffer > = req.buffer(&stream).unwrap();
