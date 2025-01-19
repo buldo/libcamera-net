@@ -120,6 +120,7 @@ public static partial class LibcameraNative
         EntryPoint = "libcamera_camera_queue_request")]
     internal static partial int CameraQueueRequest(IntPtr cam, IntPtr request);
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)] 
     internal delegate void RequestCompletedCb(IntPtr data, IntPtr requestPtr);
 
     [LibraryImport(

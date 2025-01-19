@@ -9,9 +9,7 @@ public class Camera
     private readonly Dictionary<IntPtr, Request> _requests = new();
     private Action<Request>? _onRequestCompleted;
     private IntPtr _requestCompletedHandle;
-    private GCHandle _currentHandle;
-    private IntPtr _currentManagedPtr;
-
+    
     internal Camera(IntPtr cameraPtr)
     {
         _cameraPtr = cameraPtr;
@@ -28,14 +26,17 @@ public class Camera
             throw new Exception("Not able to acquire camera");
         }
 
-        _currentHandle = GCHandle.Alloc(this, GCHandleType.Pinned);
-        _currentManagedPtr = _currentHandle.AddrOfPinnedObject();
-
         _requestCompletedHandle =
             LibcameraNative.CameraRequestCompletedConnect(
                 _cameraPtr,
-                RequestCompletedCallback,
-                _currentManagedPtr);
+                delegate(IntPtr data, IntPtr requestptr) {
+                    try {
+                        var camera = (Camera)GCHandle.FromIntPtr(data).Target;
+                        camera.ProcessRequestCompleted(requestptr);
+                    } catch (Exception ex) {
+                    }
+                },
+                IntPtr.Zero);
     }
 
     public int Release()
@@ -91,12 +92,6 @@ public class Camera
         {
             //Err(io::Error::from_raw_os_error(ret))
         }
-    }
-
-    private static void RequestCompletedCallback(IntPtr data, IntPtr requestptr)
-    {
-        var camera = (Camera)GCHandle.FromIntPtr(data).Target;
-        camera.ProcessRequestCompleted(requestptr);
     }
 
     private void ProcessRequestCompleted(IntPtr requestPtr)
