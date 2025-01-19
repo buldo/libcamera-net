@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.InteropServices;
 
 namespace Bld.LibcameraNet.Interop;
@@ -120,7 +119,7 @@ public static partial class LibcameraNative
         EntryPoint = "libcamera_camera_queue_request")]
     internal static partial int CameraQueueRequest(IntPtr cam, IntPtr request);
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)] 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void RequestCompletedCb(IntPtr data, IntPtr requestPtr);
 
     [LibraryImport(
@@ -224,5 +223,45 @@ public static partial class LibcameraNative
         EntryPoint = "libcamera_request_add_buffer")]
     internal static partial int RequestAddBuffer(IntPtr request, IntPtr stream, IntPtr buffer);
 
+    #endregion
+
+    #region Framebuffer
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_framebuffer_planes")]
+    internal static partial IntPtr FramebufferPlanes(IntPtr framebuffer);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_framebuffer_planes_size")]
+    internal static partial nuint FramebufferPlanesSize(IntPtr planes);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_framebuffer_planes_at")]
+    internal static partial IntPtr FramebufferPlanesAt(IntPtr planes, nuint index);
+    #endregion
+
+    #region FramBufferPlane
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_framebuffer_plane_fd")]
+    internal static partial int FramebufferPlaneFd(IntPtr plane);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_framebuffer_plane_offset")]
+    internal static partial nuint FramebufferPlaneOffset(IntPtr plane);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_framebuffer_plane_offset_valid")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    internal static partial bool FramebufferPlaneOffsetValid(IntPtr plane);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_framebuffer_plane_length")]
+    internal static partial nuint FramebufferPlaneLength(IntPtr plane);
     #endregion
 }

@@ -1,4 +1,6 @@
-﻿namespace Bld.LibcameraNet;
+﻿using Bld.LibcameraNet.Interop;
+
+namespace Bld.LibcameraNet;
 
 public class FrameBuffer
 {
@@ -7,6 +9,12 @@ public class FrameBuffer
     internal FrameBuffer(IntPtr bufferPtr)
     {
         _bufferPtr = bufferPtr;
+    }
+
+    public FrameBufferPlanes GetPlanes()
+    {
+        var ptr = LibcameraNative.FramebufferPlanes(_bufferPtr);
+        return new FrameBufferPlanes(ptr);
     }
 
     internal IntPtr GetPtr()
