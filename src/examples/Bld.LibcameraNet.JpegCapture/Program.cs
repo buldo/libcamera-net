@@ -69,6 +69,9 @@ internal class Program
             throw new Exception("RGB888 is not supported by the camera");
         }
 
+        var size = streamConfiguration.Size;
+        Console.WriteLine($"Size: {size.Width}x{size.Height}");
+
         var camConfigurationResult = cam.Configure(cfgs);
         if (camConfigurationResult < 0)
         {

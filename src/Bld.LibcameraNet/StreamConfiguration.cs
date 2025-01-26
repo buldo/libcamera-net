@@ -21,6 +21,12 @@ public class StreamConfiguration
         set => LibcameraNative.StreamConfigurationSetPixelFormat(_confPtr, value);
     }
 
+    public LibcameraSize Size
+    {
+        get => LibcameraNative.StreamConfigurationGetSize(_confPtr);
+        set => LibcameraNative.StreamConfigurationSetSize(_confPtr, value);
+    }
+
     public StreamFormats StreamFormats { get; }
 
     public LibcameraStream GetStream()

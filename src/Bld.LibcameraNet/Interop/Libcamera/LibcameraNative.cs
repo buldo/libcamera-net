@@ -161,6 +161,16 @@ public static partial class LibcameraNative
 
     [LibraryImport(
         LibcameraConsts.LibName,
+        EntryPoint = "libcamera_stream_configuration_get_size")]
+    internal static partial LibcameraSize StreamConfigurationGetSize(IntPtr config);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_stream_configuration_set_size")]
+    internal static partial void StreamConfigurationSetSize(IntPtr config, LibcameraSize format);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
         EntryPoint = "libcamera_stream_configuration_formats")]
     internal static partial IntPtr StreamConfigurationFormats(IntPtr config);
 
