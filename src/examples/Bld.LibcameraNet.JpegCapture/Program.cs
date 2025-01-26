@@ -60,7 +60,9 @@ internal class Program
                 throw new Exception("Error validating camera configuration");
         }
 
-        if (streamConfiguration.PixelFormat != KnownPixelFormats.DRM_FORMAT_RGB888)
+        var pixelFormatAfterConfig = streamConfiguration.PixelFormat;
+        Console.WriteLine($"PixelFormat after config: {pixelFormatAfterConfig.GetName()}");
+        if (pixelFormatAfterConfig != KnownPixelFormats.DRM_FORMAT_RGB888)
         {
             throw new Exception("RGB888 is not supported by the camera");
         }

@@ -157,7 +157,7 @@ public static partial class LibcameraNative
 
     [LibraryImport(
         LibcameraConsts.LibName,
-        EntryPoint = "libcamera_stream_configuration_get_pixel_format")]
+        EntryPoint = "libcamera_stream_configuration_set_pixel_format")]
     internal static partial void StreamConfigurationSetPixelFormat(IntPtr config, PixelFormat format);
 
     [LibraryImport(
