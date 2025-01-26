@@ -1,3 +1,5 @@
+using Bld.LibcameraNet.Interop.Libcamera;
+
 namespace Bld.LibcameraNet.Interop;
 
 public class CameraUnitCellSize : IProperty<CameraUnitCellSize>

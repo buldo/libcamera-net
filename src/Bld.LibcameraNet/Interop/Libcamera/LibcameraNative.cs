@@ -1,7 +1,6 @@
-using System;
 using System.Runtime.InteropServices;
 
-namespace Bld.LibcameraNet.Interop;
+namespace Bld.LibcameraNet.Interop.Libcamera;
 
 public static partial class LibcameraNative
 {

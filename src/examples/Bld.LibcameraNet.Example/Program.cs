@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using Bld.LibcameraNet.Interop;
+
+using Bld.LibcameraNet.Interop.Libcamera;
 
 namespace Bld.LibcameraNet.Example
 {

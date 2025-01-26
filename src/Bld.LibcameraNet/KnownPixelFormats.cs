@@ -1,5 +1,6 @@
 using System.Text;
-using Bld.LibcameraNet.Interop;
+
+using Bld.LibcameraNet.Interop.Libcamera;
 
 namespace Bld.LibcameraNet;
 

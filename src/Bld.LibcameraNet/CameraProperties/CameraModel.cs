@@ -1,5 +1,7 @@
 using System.Runtime.InteropServices;
 
+using Bld.LibcameraNet.Interop.Libcamera;
+
 namespace Bld.LibcameraNet.Interop;
 
 public class CameraModel : StringControlValue, IProperty<CameraModel>

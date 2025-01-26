@@ -1,4 +1,4 @@
-namespace Bld.LibcameraNet.Interop;
+namespace Bld.LibcameraNet.Interop.Libcamera;
 
 public enum RequestStatus
 {

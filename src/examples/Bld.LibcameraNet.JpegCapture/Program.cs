@@ -2,6 +2,8 @@
 using System.Runtime.InteropServices;
 
 using Bld.LibcameraNet.Interop;
+using Bld.LibcameraNet.Interop.Libcamera;
+
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.PixelFormats;

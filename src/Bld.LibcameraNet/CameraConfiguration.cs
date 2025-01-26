@@ -1,4 +1,6 @@
 using Bld.LibcameraNet.Interop;
+using Bld.LibcameraNet.Interop.Libcamera;
+using LibcameraNative = Bld.LibcameraNet.Interop.Libcamera.LibcameraNative;
 
 namespace Bld.LibcameraNet;
 
