@@ -123,7 +123,7 @@ internal class Program
 
         // MJPEG format has only one data plane containing encoded jpeg data with all the headers
         var planes = framebuffer.GetData();
-        var image = Image.LoadPixelData<Rgb24>(planes, 3280, 2464);
+        var image = Image.LoadPixelData<Rgb24>(planes, (int)size.Width, (int)size.Height);
         image.Save("img.jpg", new JpegEncoder());
     }
 
