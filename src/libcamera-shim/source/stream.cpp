@@ -39,4 +39,18 @@ void libcamera_stream_configuration_set_pixel_format(
       libcamera::PixelFormat(format.fourcc(), format.modifier());
 }
 
+libcamera_size_fixed libcamera_stream_configuration_get_size(
+    const libcamera_stream_configuration_t* config)
+{
+  return libcamera_size_fixed {config->size.width, config->size.height};
+}
+
+void libcamera_stream_configuration_set_size(
+    libcamera_stream_configuration_t* config,
+    libcamera_size_fixed format)
+{
+  config->size.width = format.width;
+  config->size.height = format.height;
+}
+
 }

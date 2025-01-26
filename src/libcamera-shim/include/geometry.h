@@ -14,6 +14,12 @@ struct libcamera_size {
     unsigned int height;
 };
 
+struct libcamera_size_fixed
+{
+  uint32_t width;
+  uint32_t height;
+};
+
 struct libcamera_size_range {
     struct libcamera_size min;
     struct libcamera_size max;

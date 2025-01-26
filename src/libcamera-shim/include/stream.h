@@ -3,7 +3,7 @@
 
 #include "geometry.h"
 #include "pixel_format.h"
-
+#include "geometry.h"
 #include <stddef.h>
 
 struct libcamera_stream_configuration {
@@ -64,6 +64,13 @@ libcamera_pixel_format_t libcamera_stream_configuration_get_pixel_format(
 void libcamera_stream_configuration_set_pixel_format(
     libcamera_stream_configuration_t* config,
     libcamera_pixel_format_t format);
+
+libcamera_size_fixed libcamera_stream_configuration_get_size(
+    const libcamera_stream_configuration_t* config);
+
+void libcamera_stream_configuration_set_size(
+    libcamera_stream_configuration_t* config,
+    libcamera_size_fixed format);
 
 #ifdef __cplusplus
 }
