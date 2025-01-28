@@ -48,7 +48,7 @@ internal class Program
 
         Console.WriteLine($"Generated config: {cfgs}");
 
-        streamConfiguration.PixelFormat = KnownPixelFormats.DRM_FORMAT_RGB888;
+        streamConfiguration.PixelFormat = KnownPixelFormats.DRM_FORMAT_XRGB8888;
         var validationResult = cfgs.Validate();
         switch (validationResult)
         {
@@ -64,7 +64,7 @@ internal class Program
 
         var pixelFormatAfterConfig = streamConfiguration.PixelFormat;
         Console.WriteLine($"PixelFormat after config: {pixelFormatAfterConfig.GetName()}");
-        if (pixelFormatAfterConfig != KnownPixelFormats.DRM_FORMAT_RGB888)
+        if (pixelFormatAfterConfig != KnownPixelFormats.DRM_FORMAT_XRGB8888)
         {
             throw new Exception("RGB888 is not supported by the camera");
         }
@@ -123,7 +123,8 @@ internal class Program
 
         // MJPEG format has only one data plane containing encoded jpeg data with all the headers
         var planes = framebuffer.GetData();
-        var image = Image.LoadPixelData<Rgb24>(planes, (int)size.Width, (int)size.Height);
+        // Yes, linux XRGB8888 is ImageSharp Rgba32
+        var image = Image.LoadPixelData<Rgba32>(planes, (int)size.Width, (int)size.Height);
         image.Save("img.jpg", new JpegEncoder());
     }
 
