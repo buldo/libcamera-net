@@ -44,7 +44,7 @@ class Build : NukeBuild
     [Solution(GenerateProjects = true)]
     readonly Solution Solution;
 
-    [MinVer]
+    [MinVer(UpdateBuildNumber = true)]
     readonly MinVer MinVer;
 
     [Parameter]
