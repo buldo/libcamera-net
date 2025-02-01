@@ -47,7 +47,7 @@ class Build : NukeBuild
     [Solution(GenerateProjects = true)]
     readonly Solution Solution;
 
-    [GitVersion]
+    [GitVersion(NoFetch = true)]
     readonly GitVersion GitVersion;
 
     [Parameter]
@@ -82,7 +82,7 @@ class Build : NukeBuild
 
             if (currTag == null)
             {
-                Version = $"{csprojVersion}-{GitVersion.NuGetPreReleaseTag}";
+                Version = $"{csprojVersion}-{GitVersion.PreReleaseTag}";
                 return;
             }
 
