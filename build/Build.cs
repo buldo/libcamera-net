@@ -8,6 +8,7 @@ using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MinVer;
 using Nuke.Common.Utilities.Collections;
 using Octokit;
@@ -44,8 +45,8 @@ class Build : NukeBuild
     [Solution(GenerateProjects = true)]
     readonly Solution Solution;
 
-    [MinVer(UpdateBuildNumber = true)]
-    readonly MinVer MinVer;
+    [GitVersion]
+    readonly GitVersion GitVersion;
 
     [Parameter]
     readonly string NugetApiKeyRelease;
@@ -118,6 +119,8 @@ class Build : NukeBuild
             return "local";
         }
 
-        return MinVer.MinVerPreRelease;
+
+
+        return GitVersion.NuGetPreReleaseTag;
     }
 }
