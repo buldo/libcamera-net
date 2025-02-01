@@ -10,6 +10,8 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.MinVer;
 using Nuke.Common.Utilities.Collections;
+using Octokit;
+
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -97,6 +99,7 @@ class Build : NukeBuild
 
     Target Push => _ => _
         .DependsOn(Pack)
+        .Requires(() => BetaNugetApiKey)
         .Executes(() =>
         {
             var packagePath = OutputPath
