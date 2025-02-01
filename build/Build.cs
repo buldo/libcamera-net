@@ -78,7 +78,7 @@ class Build : NukeBuild
 
             if (currTag == null)
             {
-                Version = $"{csprojVersion}-{GitVersion.PreReleaseTag}.{GitVersion.BuildMetaData}";
+                Version = $"{csprojVersion}-{GitVersion.PreReleaseTag}.{(GitVersion.BuildMetaData ?? "0")}";
                 return;
             }
 
