@@ -50,7 +50,7 @@ class Build : NukeBuild
     [Parameter]
     readonly string ReleaseNugetApiKey;
 
-    [Parameter]
+    [Parameter(Name = "BETA_NUGET_API_KEY")]
     readonly string BetaNugetApiKey;
 
     [Parameter]
