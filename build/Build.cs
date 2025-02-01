@@ -21,7 +21,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     GitHubActionsImage.Ubuntu2204,
     On = [GitHubActionsTrigger.Push],
     InvokedTargets = [nameof(Push)],
-    ImportSecrets = ["BETA_NUGET_API_KEY"],
+    ImportSecrets = ["NUGET_API_KEY_DEV"],
     AutoGenerate = true)]
 class Build : NukeBuild
 {
@@ -48,13 +48,13 @@ class Build : NukeBuild
     readonly MinVer MinVer;
 
     [Parameter]
-    readonly string ReleaseNugetApiKey;
-
-    [Parameter(Name = "BETA_NUGET_API_KEY")]
-    readonly string BetaNugetApiKey;
+    readonly string NugetApiKeyRelease;
 
     [Parameter]
-    readonly string BetaNugetSource = "https://f.feedz.io/bld/beta/nuget/index.json";
+    readonly string NugetApiKeyDev;
+
+    [Parameter]
+    readonly string NugetSourceDev = "https://f.feedz.io/bld/beta/nuget/index.json";
 
     readonly AbsolutePath OutputPath;
 
@@ -99,15 +99,15 @@ class Build : NukeBuild
 
     Target Push => _ => _
         .DependsOn(Pack)
-        .Requires(() => BetaNugetApiKey)
+        .Requires(() => NugetApiKeyDev)
         .Executes(() =>
         {
             var packagePath = OutputPath
                 .GlobFiles("*.nupkg")
                 .First();
             DotNetNuGetPush(options => options
-                .SetApiKey(BetaNugetApiKey)
-                .SetSource(BetaNugetSource)
+                .SetApiKey(NugetApiKeyDev)
+                .SetSource(NugetSourceDev)
                 .SetTargetPath(packagePath));
         });
 

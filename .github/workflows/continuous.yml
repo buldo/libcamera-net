@@ -34,4 +34,4 @@ jobs:
       - name: 'Run: Push'
         run: ./build.cmd Push
         env:
-          BETA_NUGET_API_KEY: ${{ secrets.BETA__NUGET_API_KEY }}
+          NUGET_API_KEY_DEV: ${{ secrets.NUGET_API_KEY_DEV }}
