@@ -78,9 +78,9 @@ class Build : NukeBuild
                 return;
             }
 
-            if (GitVersion.NuGetVersion.StartsWith(csprojVersion))
+            if (GitVersion.AssemblySemVer.StartsWith(csprojVersion))
             {
-                Version = GitVersion.NuGetVersion;
+                Version = GitVersion.AssemblySemVer;
                 return;
             }
 
