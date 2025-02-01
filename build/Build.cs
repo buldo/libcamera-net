@@ -82,9 +82,9 @@ class Build : NukeBuild
                 return;
             }
 
-            if (GitVersion.AssemblySemVer.StartsWith(csprojVersion))
+            if (currTag.StartsWith(csprojVersion))
             {
-                Version = GitVersion.AssemblySemVer;
+                Version = currTag;
                 return;
             }
 
