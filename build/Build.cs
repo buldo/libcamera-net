@@ -99,10 +99,13 @@ class Build : NukeBuild
         .DependsOn(Publish)
         .Executes(() =>
         {
-            var packages = OutputPath.GlobFiles("*.nupkg");
+            var packagePath = OutputPath
+                .GlobFiles("*.nupkg")
+                .First();
             DotNetNuGetPush(options => options
                 .SetApiKey(BetaNugetApiKey)
-                .SetSource(BetaNugetSource));
+                .SetSource(BetaNugetSource)
+                .SetTargetPath(packagePath));
         });
 
     private string GetVersionSuffix()
