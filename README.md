@@ -13,7 +13,7 @@ dotnet add package Bld.LibcameraNet
 ```
 
 ## Dev and prerelease versions of packages:
-Feed:
+[![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Ff.feedz.io%2Fbld%2Fbeta%2Fshield%2FBld.LibcameraNet%2Flatest&label=Bld.LibcameraNet)](https://f.feedz.io/bld/beta/packages/Bld.LibcameraNet/latest/download)  
 ```
 https://f.feedz.io/bld/beta/nuget/index.json
 ```
