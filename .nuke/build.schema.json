@@ -27,6 +27,7 @@
         "Clean",
         "Compile",
         "Pack",
+        "PrepareVersion",
         "Push",
         "Restore"
       ]

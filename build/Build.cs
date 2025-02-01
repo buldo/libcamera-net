@@ -4,6 +4,7 @@ using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Execution;
+using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
@@ -23,6 +24,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     On = [GitHubActionsTrigger.Push],
     InvokedTargets = [nameof(Push)],
     ImportSecrets = ["NUGET_API_KEY_DEV"],
+    FetchDepth = 0,
     AutoGenerate = true)]
 class Build : NukeBuild
 {
@@ -59,6 +61,40 @@ class Build : NukeBuild
 
     readonly AbsolutePath OutputPath;
 
+    [GitRepository]
+    readonly GitRepository Repository;
+
+    private string Version;
+
+    Target PrepareVersion => _ => _
+        .Executes(() =>
+        {
+
+            var csprojVersion = Solution.Bld_LibcameraNet.GetProperty("VersionPrefix");
+
+            if (IsLocalBuild)
+            {
+                Version = $"{csprojVersion}-local";
+                return;
+            }
+
+            var currTag = Repository.Tags.FirstOrDefault();
+
+            if (currTag == null)
+            {
+                Version = $"{csprojVersion}-{GitVersion.NuGetPreReleaseTag}";
+                return;
+            }
+
+            if (GitVersion.NuGetVersion.StartsWith(csprojVersion))
+            {
+                Version = GitVersion.NuGetVersion;
+                return;
+            }
+
+            throw new Exception("Version problem");
+        });
+
     Target Clean => _ => _
         .Before(Restore)
         .Executes(() =>
@@ -74,25 +110,25 @@ class Build : NukeBuild
         });
 
     Target Compile => _ => _
-        .DependsOn(Restore, Clean)
+        .DependsOn(Restore, Clean, PrepareVersion)
         .Executes(() =>
         {
             DotNetBuild(options => options
                 .SetProjectFile(Solution.Bld_LibcameraNet)
-                .SetVersionSuffix(GetVersionSuffix())
+                .SetVersion(Version)
                 .SetConfiguration(Configuration)
                 .SetNoRestore(true)
             );
         });
 
     Target Pack => _ => _
-        .DependsOn(Compile)
+        .DependsOn(Compile, PrepareVersion)
         .Executes(() =>
         {
             DotNetPack(options => options
                 .SetProject(Solution.Bld_LibcameraNet)
                 .SetConfiguration(Configuration)
-                .SetVersionSuffix(GetVersionSuffix())
+                .SetVersion(Version)
                 .SetOutputDirectory(OutputPath)
                 .SetNoBuild(true)
                 .SetNoRestore(true));
@@ -111,16 +147,4 @@ class Build : NukeBuild
                 .SetSource(NugetSourceDev)
                 .SetTargetPath(packagePath));
         });
-
-    private string GetVersionSuffix()
-    {
-        if (IsLocalBuild)
-        {
-            return "local";
-        }
-
-
-
-        return GitVersion.NuGetPreReleaseTag;
-    }
 }
