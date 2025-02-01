@@ -41,7 +41,7 @@ class Build : NukeBuild
     [Solution(GenerateProjects = true)]
     readonly Solution Solution;
 
-    [GitVersion(NoFetch = true)]
+    [GitVersion]
     readonly GitVersion GitVersion;
 
     [Parameter]
