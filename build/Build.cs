@@ -82,21 +82,21 @@ class Build : NukeBuild
             );
         });
 
-    Target Publish => _ => _
+    Target Pack => _ => _
         .DependsOn(Compile)
         .Executes(() =>
         {
-            DotNetPublish(options => options
+            DotNetPack(options => options
                 .SetProject(Solution.Bld_LibcameraNet)
                 .SetConfiguration(Configuration)
                 .SetVersionSuffix(GetVersionSuffix())
-                .SetOutput(OutputPath)
-                .SetNoRestore(true)
-                .SetNoBuild(true));
+                .SetOutputDirectory(OutputPath)
+                .SetNoBuild(true)
+                .SetNoRestore(true));
         });
 
     Target Push => _ => _
-        .DependsOn(Publish)
+        .DependsOn(Pack)
         .Executes(() =>
         {
             var packagePath = OutputPath
