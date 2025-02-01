@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.3.2.1</Version>
+    <VersionPrefix>0.3.2</VersionPrefix>
     <Authors>Roman Buldygin</Authors>
   </PropertyGroup>
 

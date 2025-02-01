@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35507.96
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{87AB0625-B593-4103-95F8-D3303E88B584}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{87AB0625-B593-4103-95F8-D3303E88B584}"
 	ProjectSection(SolutionItems) = preProject
 		libcamera-shim\CMakeLists.txt = libcamera-shim\CMakeLists.txt
 		..\README.md = ..\README.md
@@ -23,8 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B7731AEC-D59A-4F73-83E3-76CCF7511FDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7731AEC-D59A-4F73-83E3-76CCF7511FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B98752A5-A6A1-E1BC-56BD-38C64D81FD06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B98752A5-A6A1-E1BC-56BD-38C64D81FD06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B98752A5-A6A1-E1BC-56BD-38C64D81FD06}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,6 +35,8 @@ Global
 		{BA737225-AEA7-EAE5-A3A3-8C8322138E43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA737225-AEA7-EAE5-A3A3-8C8322138E43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA737225-AEA7-EAE5-A3A3-8C8322138E43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7731AEC-D59A-4F73-83E3-76CCF7511FDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7731AEC-D59A-4F73-83E3-76CCF7511FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

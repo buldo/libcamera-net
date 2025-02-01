@@ -13,6 +13,11 @@
 
   <ItemGroup>
     <PackageReference Include="Nuke.Common" Version="9.0.4" />
+    <PackageReference Include="Nuke.GitHub" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageDownload Include="minver-cli" Version="[6.0.0]" />
   </ItemGroup>
 
 </Project>
