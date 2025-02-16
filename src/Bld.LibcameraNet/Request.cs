@@ -26,13 +26,10 @@ public class Request
         return _reqPtr;
     }
 
-    public ControlList Metadata
+    public ControlList<ControlId> GetMetadata()
     {
-        get
-        {
-            var ptr = LibcameraNative.RequestMetadata(_reqPtr);
-            return new ControlList(ptr);
-        }
+        var ptr = LibcameraNative.RequestMetadata(_reqPtr);
+        return new ControlList<ControlId>(ptr);
     }
 
     public void AddBuffer<T>(LibcameraStream stream, T buffer) where T: IAsFrameBuffer

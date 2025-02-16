@@ -15,10 +15,10 @@ public class Camera
     internal Camera(IntPtr cameraPtr)
     {
         _cameraPtr = cameraPtr;
-        Properties = new ControlList(LibcameraNative.CameraProperties(_cameraPtr));
+        Properties = new ControlList<PropertyId>(LibcameraNative.CameraProperties(_cameraPtr));
     }
 
-    public ControlList Properties { get; }
+    public ControlList<PropertyId> Properties { get; }
 
     public void Acquire()
     {
@@ -79,7 +79,7 @@ public class Camera
         _onRequestCompleted = func;
     }
 
-    public void Start(ControlList? controls = null)
+    public void Start(ControlList<ControlId>? controls = null)
     {
         var ctrlPtr = controls?.GetPtr() ?? IntPtr.Zero;
         var ret = LibcameraNative.CameraStart(_cameraPtr, ctrlPtr);

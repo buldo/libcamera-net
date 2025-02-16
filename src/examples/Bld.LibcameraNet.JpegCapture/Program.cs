@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-
+using Bld.LibcameraNet.Controls;
 using Bld.LibcameraNet.Interop;
 using Bld.LibcameraNet.Interop.Libcamera;
 
@@ -28,7 +28,7 @@ internal class Program
             throw new Exception("No cameras found");
         }
         var cam = cameras[0];
-        var cameraModel = cam.Properties.Get<CameraModel>();
+        var cameraModel = (StringControlValue<PropertyId>)cam.Properties.Get(PropertyId.MODEL);
         Console.WriteLine($"Using camera: {cameraModel.Value}");
 
         cam.Acquire();
@@ -115,11 +115,11 @@ internal class Program
         var req = await rx.ReadAsync();
 
         Console.WriteLine($"Camera request {req} completed!");
-        Console.WriteLine($"Metadata: {req.Metadata}");
+        Console.WriteLine($"GetMetadata: {req.GetMetadata}");
 
         // Get framebuffer for our stream
         var framebuffer = (MemoryMappedFrameBuffer)req.GetBuffer(stream);
-        //Console.WriteLine($"FrameBuffer metadata: {framebuffer.Metadata}");
+        //Console.WriteLine($"FrameBuffer metadata: {framebuffer.GetMetadata}");
 
         // MJPEG format has only one data plane containing encoded jpeg data with all the headers
         var planes = framebuffer.GetData();
