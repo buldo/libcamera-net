@@ -101,15 +101,18 @@ public class ControlList<TId> where TId : struct, Enum
 
         public bool MoveNext()
         {
+            if (_isFirstElement)
+            {
+                _isFirstElement = false;
+            }
+            else
+            {
+                LibcameraNative.ControlListIterNext(_iteratorPtr);
+            }
+            
             if (LibcameraNative.ControlListIterEnd(_iteratorPtr))
             {
                 return false;
-            }
-
-            if (!_isFirstElement)
-            {
-                LibcameraNative.ControlListIterNext(_iteratorPtr);
-                _isFirstElement = false;
             }
 
             Current = CreateCurrent();
