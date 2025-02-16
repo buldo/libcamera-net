@@ -15,10 +15,10 @@ public class Camera
     internal Camera(IntPtr cameraPtr)
     {
         _cameraPtr = cameraPtr;
-        Properties = new PropertyList(LibcameraNative.CameraProperties(_cameraPtr));
+        Properties = new ControlList(LibcameraNative.CameraProperties(_cameraPtr));
     }
 
-    public PropertyList Properties { get; }
+    public ControlList Properties { get; }
 
     public void Acquire()
     {
