@@ -53,4 +53,11 @@ void libcamera_stream_configuration_set_size(
   config->size.height = format.height;
 }
 
+libcamera_stream_configuration_t* libcamera_stream_get_configuration(
+    libcamera_stream_t* stream)
+{
+  return const_cast<libcamera_stream_configuration_t*>(
+      &stream->configuration());
+}
+
 }

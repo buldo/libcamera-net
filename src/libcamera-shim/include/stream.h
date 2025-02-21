@@ -72,6 +72,9 @@ void libcamera_stream_configuration_set_size(
     libcamera_stream_configuration_t* config,
     libcamera_size_fixed format);
 
+libcamera_stream_configuration_t* libcamera_stream_get_configuration(
+    libcamera_stream_t* stream);
+
 #ifdef __cplusplus
 }
 #endif
