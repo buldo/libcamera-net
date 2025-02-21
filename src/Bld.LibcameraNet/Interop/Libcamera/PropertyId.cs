@@ -15,3 +15,8 @@ public enum PropertyId
 
     COLOR_FILTER_ARRANGEMENT = 10001,
 }
+
+public enum ControlId
+{
+
+}
