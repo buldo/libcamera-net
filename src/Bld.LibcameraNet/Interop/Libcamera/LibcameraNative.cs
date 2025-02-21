@@ -62,6 +62,36 @@ public static partial class LibcameraNative
         EntryPoint = "libcamera_control_list_get")]
     internal static partial IntPtr ControlListGet(IntPtr cam, int id);
 
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_control_list_iter")]
+    internal static partial IntPtr ControlListIter(IntPtr list);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_control_list_iter_destroy")]
+    internal static partial void ControlListIterDestroy(IntPtr iter);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_control_list_iter_end")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    internal static partial bool ControlListIterEnd(IntPtr iter);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_control_list_iter_next")]
+    internal static partial void ControlListIterNext(IntPtr iter);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_control_list_iter_id")]
+    internal static partial nuint ControlListIterId(IntPtr iter);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_control_list_iter_value")]
+    internal static partial IntPtr ControlListIterValue(IntPtr iter);
 
     #endregion
 
