@@ -213,6 +213,11 @@ public static partial class LibcameraNative
         LibcameraConsts.LibName,
         EntryPoint = "libcamera_framebuffer_allocator_allocate")]
     internal static partial int FramebufferAllocatorAllocate(IntPtr alloc, IntPtr stream);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_stream_configuration_get_color_space")]
+    internal static partial byte StreamConfigurationGetColorSpace(IntPtr stream);
     #endregion
 
     #region StreamFormats

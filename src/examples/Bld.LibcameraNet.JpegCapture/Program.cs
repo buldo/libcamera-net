@@ -82,6 +82,7 @@ internal class Program
 
         // Allocate frame buffers for the stream
         var stream = streamConfiguration.GetStream();
+        PrintDebugInformation(stream);
         var buffers = alloc.Alloc(stream);
         Console.WriteLine($"Allocated {buffers.Count} buffers");
 
@@ -126,6 +127,16 @@ internal class Program
         // Yes, linux XRGB8888 is ImageSharp Rgba32
         var image = Image.LoadPixelData<Rgba32>(planes, (int)size.Width, (int)size.Height);
         image.Save("img.jpg", new JpegEncoder());
+    }
+
+    private static void PrintDebugInformation(LibcameraStream stream)
+    {
+        Console.WriteLine("********DEBUG INFO FOR STREAM********");
+        var configuration = stream.Configuration;
+        Console.WriteLine($"ColorSpace {configuration.ColorSpace}");
+        Console.WriteLine($"PixelFormat {configuration.PixelFormat.GetName()}");
+        Console.WriteLine($"Height*Width {configuration.Size.Height}*{configuration.Size.Width}");
+        Console.WriteLine("*************************************");
     }
 
     private static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)

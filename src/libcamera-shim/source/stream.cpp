@@ -60,4 +60,39 @@ libcamera_stream_configuration_t* libcamera_stream_get_configuration(
       &stream->configuration());
 }
 
+uint8_t libcamera_stream_configuration_get_color_space(
+    const libcamera_stream_configuration_t* config)
+{
+  if (!config->colorSpace.has_value()) {
+    return 0;
+  }
+
+  if (config->colorSpace == libcamera::ColorSpace::Raw)
+  {
+    return 1;
+  }
+
+  if (config->colorSpace == libcamera::ColorSpace::Srgb) {
+    return 2;
+  }
+
+  if (config->colorSpace == libcamera::ColorSpace::Sycc) {
+    return 3;
+  }
+
+  if (config->colorSpace == libcamera::ColorSpace::Smpte170m) {
+    return 4;
+  }
+
+  if (config->colorSpace == libcamera::ColorSpace::Rec709) {
+    return 5;
+  }
+
+  if (config->colorSpace == libcamera::ColorSpace::Rec2020) {
+    return 6;
+  }
+
+  return 255;
+}
+
 }

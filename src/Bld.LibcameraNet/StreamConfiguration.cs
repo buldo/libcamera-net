@@ -1,4 +1,3 @@
-using Bld.LibcameraNet.Interop;
 using Bld.LibcameraNet.Interop.Libcamera;
 using LibcameraNative = Bld.LibcameraNet.Interop.Libcamera.LibcameraNative;
 
@@ -25,6 +24,15 @@ public class StreamConfiguration
     {
         get => LibcameraNative.StreamConfigurationGetSize(_confPtr);
         set => LibcameraNative.StreamConfigurationSetSize(_confPtr, value);
+    }
+
+    public ColorSpace? ColorSpace
+    {
+        get
+        {
+            var shimValue = LibcameraNative.StreamConfigurationGetColorSpace(_confPtr);
+            return ColorSpace.FromShimValue(shimValue);
+        }
     }
 
     public StreamFormats StreamFormats { get; }
