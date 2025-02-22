@@ -323,4 +323,11 @@ public static partial class LibcameraNative
         EntryPoint = "libcamera_framebuffer_plane_length")]
     internal static partial nuint FramebufferPlaneLength(IntPtr plane);
     #endregion
+
+    #region Stream
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_stream_get_configuration")]
+    internal static partial IntPtr StreamGetConfiguration(IntPtr stream);
+    #endregion
 }
