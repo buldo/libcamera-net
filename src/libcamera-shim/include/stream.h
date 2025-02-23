@@ -64,6 +64,9 @@ libcamera_pixel_format_t libcamera_stream_configuration_get_pixel_format(
 uint8_t libcamera_stream_configuration_get_color_space(
     const libcamera_stream_configuration_t* config);
 
+unsigned int libcamera_stream_configuration_get_stride(
+    const libcamera_stream_configuration_t* config);
+
 void libcamera_stream_configuration_set_pixel_format(
     libcamera_stream_configuration_t* config,
     libcamera_pixel_format_t format);

@@ -95,4 +95,10 @@ uint8_t libcamera_stream_configuration_get_color_space(
   return 255;
 }
 
+unsigned int libcamera_stream_configuration_get_stride(
+    const libcamera_stream_configuration_t* config)
+{
+  return config->stride;
+}
+
 }

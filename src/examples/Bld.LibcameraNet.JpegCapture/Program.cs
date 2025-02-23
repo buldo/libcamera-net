@@ -134,6 +134,7 @@ internal class Program
         Console.WriteLine("********DEBUG INFO FOR STREAM********");
         var configuration = stream.Configuration;
         Console.WriteLine($"ColorSpace {configuration.ColorSpace}");
+        Console.WriteLine($"Stride {configuration.Stride}");
         Console.WriteLine($"PixelFormat {configuration.PixelFormat.GetName()}");
         Console.WriteLine($"Height*Width {configuration.Size.Height}*{configuration.Size.Width}");
         Console.WriteLine("*************************************");

@@ -35,6 +35,14 @@ public class StreamConfiguration
         }
     }
 
+    public UInt64 Stride
+    {
+        get
+        {
+            return LibcameraNative.StreamConfigurationGetStride(_confPtr);
+        }
+    }
+
     public StreamFormats StreamFormats { get; }
 
     public LibcameraStream GetStream()

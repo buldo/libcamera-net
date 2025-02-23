@@ -218,6 +218,11 @@ public static partial class LibcameraNative
         LibcameraConsts.LibName,
         EntryPoint = "libcamera_stream_configuration_get_color_space")]
     internal static partial byte StreamConfigurationGetColorSpace(IntPtr stream);
+
+    [LibraryImport(
+        LibcameraConsts.LibName,
+        EntryPoint = "libcamera_stream_configuration_get_stride")]
+    internal static partial nuint StreamConfigurationGetStride(IntPtr stream);
     #endregion
 
     #region StreamFormats
