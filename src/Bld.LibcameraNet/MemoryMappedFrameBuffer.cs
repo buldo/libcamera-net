@@ -6,11 +6,11 @@ namespace Bld.LibcameraNet;
 
 public class MemoryMappedFrameBuffer : IAsFrameBuffer
 {
-    private readonly FrameBuffer _frameBuffer;
+    private readonly LibcameraFrameBuffer _frameBuffer;
     private readonly List<MappedPlane> _planes = new List<MappedPlane>();
     private readonly Dictionary<int, (IntPtr pointer, UInt64 len)> _mapped = new();
 
-    public MemoryMappedFrameBuffer(FrameBuffer frameBuffer)
+    public MemoryMappedFrameBuffer(LibcameraFrameBuffer frameBuffer)
     {
         _frameBuffer = frameBuffer;
 
@@ -108,7 +108,7 @@ public class MemoryMappedFrameBuffer : IAsFrameBuffer
         return data;
     }
 
-    public FrameBuffer AsFrameBuffer()
+    public LibcameraFrameBuffer AsFrameBuffer()
     {
         return _frameBuffer;
     }

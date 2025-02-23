@@ -1,13 +1,12 @@
-﻿using Bld.LibcameraNet.Interop;
-using LibcameraNative = Bld.LibcameraNet.Interop.Libcamera.LibcameraNative;
+﻿using Bld.LibcameraNet.Interop.Libcamera;
 
 namespace Bld.LibcameraNet;
 
-public class FrameBuffer
+public class LibcameraFrameBuffer
 {
     private readonly IntPtr _bufferPtr;
 
-    internal FrameBuffer(IntPtr bufferPtr)
+    internal LibcameraFrameBuffer(IntPtr bufferPtr)
     {
         _bufferPtr = bufferPtr;
     }

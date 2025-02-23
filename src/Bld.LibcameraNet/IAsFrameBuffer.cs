@@ -2,5 +2,5 @@
 
 public interface IAsFrameBuffer
 {
-    FrameBuffer AsFrameBuffer();
+    LibcameraFrameBuffer AsFrameBuffer();
 }
